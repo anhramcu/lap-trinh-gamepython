@@ -1,6 +1,7 @@
 from time import time
 import pygame
 pygame.font.init()
+pygame.mixer.init() # gaming sound
 import random
 import sys
 from pygame.locals import *
@@ -348,6 +349,9 @@ class MainGame():
         #9 Gọi phương thức khởi tạo thây ma
         self.init_zombies()
         #1 Miễn là trò chơi chưa kết thúc, nó vẫn tiếp tục lặp lại
+        #mở nhạc nền
+        pygame.mixer.music.load('imgs/grasswalk.mp3')
+        pygame.mixer.music.play(-1,0,0)
         while True:
             #1 Kết xuất nền trắng
             MainGame.window.fill((255, 255, 255))
@@ -382,6 +386,9 @@ class MainGame():
             drawText('The game is stopping', font, windowSurface, (scrrr_width / 4)- 100, (scrrr_height / 3) + 100)
         drawText('Press enter to continue or escape to exit', font, windowSurface, (scrrr_width / 4) - 100, (scrrr_height / 3) + 150)
         pygame.display.update()
+        pygame.mixer.music.stop()
+        gameOverSound = pygame.mixer.Sound('imgs/gameover.wav')
+        gameOverSound.play()
         waitForPlayerToPressKey()
 if __name__ == '__main__':
     game = MainGame()
